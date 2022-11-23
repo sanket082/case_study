@@ -12,6 +12,18 @@ on:
       - v1.
 
 jobs:
+  build-container:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v3
+    
+    - name: Build the Docker image
+      working-directory: 03-app-dotnet
+      run: docker build . --file Dockerfile --tag my-app-dotnet:$(date +%s)
+      
   build:
     runs-on: ubuntu-latest
     steps:

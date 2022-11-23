@@ -22,7 +22,7 @@ visited = []
 # Crawl the page and populate the queue with newly found URLs
 def bfsSearch(url):
     visited.append(url)
-    if len(bfsQueue) > 150:
+    if len(bfsQueue) > 15:
         return
 
     urlf = urllib2.urlopen(url)
@@ -42,7 +42,7 @@ def bfsSearch(url):
 
         # If not found in queue
         if flag == 0:
-            if len(bfsQueue) > 150:
+            if len(bfsQueue) > 15:
                 return
             # check if the link is not in visited and is a link for product(containg /p/)
             if (visited.count(complete_url)) == 0 and "/p/" in complete_url:

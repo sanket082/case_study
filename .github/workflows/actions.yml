@@ -22,7 +22,7 @@ jobs:
     
     - name: Build the Docker image
       
-      run: docker build -t
+      run: docker build -t .
       
   build:
     runs-on: ubuntu-latest

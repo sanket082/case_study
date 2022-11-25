@@ -1,15 +1,14 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+FROM python:2.7-alpine
+
+RUN mkdir /app
 WORKDIR /app
 
-# Copy everything
-COPY . ./
-# Restore as distinct layers
-RUN dotnet restore
-# Build and publish a release
-RUN dotnet publish -c Release -o out
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "app-dotnet.dll"]
+COPY . .
+
+LABEL maintainer="WebMagic Informatica <info@webmagicinformatica.com>" \
+      version="1.0"
+
+CMD flask run --host=0.0.0.0 --port=5000

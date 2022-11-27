@@ -1,14 +1,14 @@
-FROM python:2.7-alpine
-
-RUN mkdir /app
+FROM python:3-slim AS builder
+ADD . /app
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+# We are installing a dependency here directly into our app source dir
+RUN pip install --target=/app requests
 
-COPY . .
-
-LABEL maintainer="WebMagic Informatica <info@webmagicinformatica.com>" \
-      version="1.0"
-
-CMD flask run --host=0.0.0.0 --port=5000
+# A distroless container image with Python and some basics like SSL certificates
+# https://github.com/GoogleContainerTools/distroless
+FROM gcr.io/distroless/python3-debian10
+COPY --from=builder /app /app
+WORKDIR /app
+ENV PYTHONPATH /app
+CMD ["/app/main.py"]

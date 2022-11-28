@@ -2,11 +2,11 @@ name: run main.py
 
 on:
   push:
-    # Sequence of patterns matched against refs/heads
+    
     branches-ignore:    
       - 'mona/octocat'
       - 'releases/**-alpha'
-    # Sequence of patterns matched against refs/tags
+   
     tags-ignore:        
       - v2
       - v1.
@@ -30,12 +30,12 @@ jobs:
     steps:
 
       - name: checkout repo content
-        uses: actions/checkout@v2 # checkout the repository content to github runner
+        uses: actions/checkout@v2 
 
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9' # install the python version needed
+          python-version: '3.9'
           
       - name: install python packages
         run: |
@@ -44,7 +44,7 @@ jobs:
           pip install nltk
           pip install -r requirements.txt
           
-      - name: execute py script # run main.py
+      - name: execute py script 
         env:
           SOME_SECRET: ${{ secrets.SOME_SECRET }}
         run: python main.py

@@ -1,15 +1,6 @@
 name: run main.py
 
-on:
-  push:
-    
-    branches-ignore:    
-      - 'mona/octocat'
-      - 'releases/**-alpha'
-   
-    tags-ignore:        
-      - v2
-      - v1.
+on: [push, pull_request]
 
 jobs:
   
